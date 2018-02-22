@@ -5,6 +5,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+import com.google.gson.Gson;
+
 import java.text.MessageFormat;
 
 import kz.kaliolla.album.net.RestApi;
@@ -58,6 +60,7 @@ public class App extends Application {
     private void initRestApi() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .addConverterFactory()
                 .build();
 
         reatApi = retrofit.create(RestApi.class);
