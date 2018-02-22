@@ -12,6 +12,7 @@ import java.text.MessageFormat;
 import kz.kaliolla.album.net.RestApi;
 import kz.kaliolla.album.utils.LogUtil;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static kz.kaliolla.album.net.Constants.BASE_URL;
 
@@ -60,7 +61,7 @@ public class App extends Application {
     private void initRestApi() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory()
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         reatApi = retrofit.create(RestApi.class);
