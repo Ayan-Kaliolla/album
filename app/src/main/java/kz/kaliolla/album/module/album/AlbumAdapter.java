@@ -1,6 +1,8 @@
 package kz.kaliolla.album.module.album;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.kaliolla.album.R;
 import kz.kaliolla.album.models.Album;
+import kz.kaliolla.album.module.photo.PhotoActivity;
 
 /**
  * Created by akaliolla on 22.02.2018.
@@ -26,10 +29,14 @@ class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void setAlbums(List<Album> items) {
+    public void setAlbums(@NonNull List<Album> items) {
         this.items = items;
+        notifyDataSetChanged();
     }
 
+    public List<Album> getAlbums(){
+        return items;
+    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.album_item, parent, false);
@@ -42,11 +49,18 @@ class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
         Album album = items.get(position);
         holder.id.setText(String.valueOf(album.getId()));
         holder.title.setText(album.getTitle());
+
+        holder.itemView.setTag(album);
+        holder.itemView.setOnClickListener(mOnClickListener);
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        if (items != null) {
+            return items.size();
+        } else {
+            return 0;
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -61,4 +75,14 @@ class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
         }
     }
 
+    private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Album album = (Album) view.getTag();
+            Context context = view.getContext();
+            Intent intent = new Intent(context, PhotoActivity.class);
+            intent.putExtra(PhotoActivity.ALBUM_ID, album.getId());
+            context.startActivity(intent);
+        }
+    };
 }

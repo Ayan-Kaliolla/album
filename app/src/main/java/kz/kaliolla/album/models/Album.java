@@ -1,10 +1,13 @@
 package kz.kaliolla.album.models;
 
+import java.io.Serializable;
+
 /**
  * Created by akaliolla on 22.02.2018.
  */
 
-public class Album {
+public class Album implements Serializable{
+
     private long id;
     private String title;
 
