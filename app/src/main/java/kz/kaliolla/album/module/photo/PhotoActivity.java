@@ -41,6 +41,7 @@ public class PhotoActivity extends AppCompatActivity implements PhotoView {
     private PhotoAdapter photoAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private PhotoPresenter presenter;
+    private boolean clear = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class PhotoActivity extends AppCompatActivity implements PhotoView {
             loadPhotos(albumId);
         }else {
             setPhotos((List<Photo>) App.getSavedObject());
+            clear = true;
         }
     }
 
@@ -118,5 +120,14 @@ public class PhotoActivity extends AppCompatActivity implements PhotoView {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         App.saveObject(photoAdapter.getPhotos());
+        clear = false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (clear){
+            App.saveObject(null);
+        }
     }
 }

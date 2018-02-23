@@ -31,6 +31,7 @@ public class AlbumActivity extends AppCompatActivity implements  AlbumView{
     private AlbumAdapter albumAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private AlbumPresenter presenter;
+    private boolean clear = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class AlbumActivity extends AppCompatActivity implements  AlbumView{
             loadAlbums();
         }else {
             setAlbums((List<Album>) App.getSavedObject());
+            clear = true;
         }
     }
 
@@ -81,8 +83,6 @@ public class AlbumActivity extends AppCompatActivity implements  AlbumView{
         presenter.loadAlbums();
     }
 
-
-
     @Override
     public void setAlbums(List<Album> albums) {
         swipeRefreshLayout.setRefreshing(false);
@@ -106,5 +106,14 @@ public class AlbumActivity extends AppCompatActivity implements  AlbumView{
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         App.saveObject(albumAdapter.getAlbums());
+        clear = false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (clear){
+            App.saveObject(null);
+        }
     }
 }
