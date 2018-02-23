@@ -21,7 +21,8 @@ import static kz.kaliolla.album.net.Constants.BASE_URL;
  */
 
 public class App extends Application {
-    private static RestApi reatApi;
+    private static RestApi restApi;
+    private static Object savedObject;
 
     @Override
     public void onCreate() {
@@ -64,10 +65,18 @@ public class App extends Application {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        reatApi = retrofit.create(RestApi.class);
+        restApi = retrofit.create(RestApi.class);
     }
 
-    public static RestApi getReatApi() {
-        return reatApi;
+    public static Object getSavedObject() {
+        return savedObject;
+    }
+
+    public static void saveObject(Object object) {
+        savedObject = object;
+    }
+
+    public static RestApi getRestApi() {
+        return restApi;
     }
 }

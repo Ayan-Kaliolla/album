@@ -49,6 +49,10 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
+    public List<Photo> getPhotos() {
+        return this.photos;
+    }
+
     @Override
     public PhotoAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.photo_item, parent, false);

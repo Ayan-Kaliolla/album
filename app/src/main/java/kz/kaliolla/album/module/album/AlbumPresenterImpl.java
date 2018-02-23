@@ -25,7 +25,7 @@ class AlbumPresenterImpl implements AlbumPresenter, Callback<List<Album>>{
 
     @Override
     public void loadAlbums() {
-        App.getReatApi().getAlbums().enqueue(this);
+        App.getRestApi().getAlbums().enqueue(this);
     }
 
     @Override

@@ -24,7 +24,7 @@ class PhotoPresenterImpl implements PhotoPresenter, Callback<List<Photo>> {
 
     @Override
     public void loadPhotos(long id) {
-        App.getReatApi().getPhotos(id).enqueue(this);
+        App.getRestApi().getPhotos(id).enqueue(this);
     }
 
     @Override
